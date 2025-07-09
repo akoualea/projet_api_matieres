@@ -1,18 +1,15 @@
-# ===============================================
-# Fichier render.yaml - CORRECTION DU TYPE DE SERVICE
-# ===============================================
+# ==========================================================
+# Fichier render.yaml - Version DÉFINITIVE et OFFICIELLE
+# ==========================================================
 
 services:
   # 1. Notre service de base de données PostgreSQL
-  - type: psql # CORRECTION ICI : psql au lieu de pserv
+  # Le type est 'private' pour un service qui n'est pas directement exposé sur le web
+  - type: pserv
     name: bdd-matieres
-    plan: free
-    postgresMajorVersion: 14
-    # Les données sont stockées sur un disque persistant
-    disk:
-      name: postgresql-data-disk
-      mountPath: /var/lib/postgresql/data
-      sizeGB: 1
+    # On spécifie l'environnement de la base de données
+    env: postgres
+    plan: free # Le plan gratuit
 
   # 2. Notre application web FastAPI
   - type: web
@@ -30,6 +27,6 @@ services:
       - key: DATABASE_URL
         # On récupère l'URL de connexion depuis le service de base de données
         fromService:
-          type: psql # CORRECTION ICI : psql au lieu de pserv
+          type: pserv
           name: bdd-matieres
           property: connectionString
