@@ -23,7 +23,7 @@ services:
     # Définition des variables d'environnement
     envVars:
       - key: PYTHON_VERSION
-        value: "3.11"
+        value: "3.11.9"
       - key: DATABASE_URL
         # On récupère l'URL de connexion depuis la base de données définie ci-dessus
         fromDatabase:
