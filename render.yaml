@@ -1,32 +1,31 @@
 # ==========================================================
-# Fichier render.yaml - Version DÉFINITIVE et OFFICIELLE
+# Fichier render.yaml - La VRAIE Version Correcte
 # ==========================================================
 
-services:
-  # 1. Notre service de base de données PostgreSQL
-  # Le type est 'private' pour un service qui n'est pas directement exposé sur le web
-  - type: pserv
-    name: bdd-matieres
-    # On spécifie l'environnement de la base de données
-    env: postgres
+# On définit d'abord les bases de données
+databases:
+  - name: bdd-matieres # Nom de notre base de données
+    databaseName: matieres_db # Nom réel de la BDD à l'intérieur du serveur
+    user: api_user # Nom de l'utilisateur qui sera créé
     plan: free # Le plan gratuit
 
-  # 2. Notre application web FastAPI
+# Ensuite, on définit les services qui vont utiliser ces bases de données
+services:
+  # Notre application web FastAPI
   - type: web
     name: projet-api-matieres
     env: python
     plan: free
     # Commande pour installer les dépendances
     buildCommand: "pip install -r requirements.txt"
-    # Commande pour démarrer le serveur de production Gunicorn
+    # Commande pour démarrer le serveur de production
     startCommand: "gunicorn app.main:app -w 4 -k uvicorn.workers.UvicornWorker"
     # Définition des variables d'environnement
     envVars:
       - key: PYTHON_VERSION
         value: "3.11"
       - key: DATABASE_URL
-        # On récupère l'URL de connexion depuis le service de base de données
-        fromService:
-          type: pserv
+        # On récupère l'URL de connexion depuis la base de données définie ci-dessus
+        fromDatabase:
           name: bdd-matieres
           property: connectionString
