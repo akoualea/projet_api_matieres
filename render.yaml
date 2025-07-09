@@ -1,0 +1,31 @@
+services:
+  # 1. Notre Base de Données PostgreSQL
+  - type: pserv
+    name: ma-base-de-donnees-matieres
+    env: postgres
+    plan: free
+    postgresMajorVersion: 14
+    # Les données de la BDD sont conservées même si le service redémarre
+    volume:
+      name: postgres-data
+      mountPath: /var/lib/postgresql/data
+
+  # 2. Notre Application Web FastAPI
+  - type: web
+    name: mon-api-matieres
+    env: python
+    plan: free
+    # Commande pour construire le projet
+    buildCommand: "pip install -r requirements.txt"
+    # Commande pour démarrer le serveur (utilise notre script)
+    startCommand: "bash start.sh"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11  # Le Python 3.13 n'est peut-être pas encore dispo, 3.11 est très sûr.
+      - key: DATABASE_URL
+        fromService:
+          type: pserv
+          name: ma-base-de-donnees-matieres
+          property: connectionString
+      - key: WEB_CONCURRENCY # Pour Gunicorn
+        value: 4

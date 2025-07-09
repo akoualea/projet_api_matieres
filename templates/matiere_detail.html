@@ -1,0 +1,59 @@
+<!-- Contenu COMPLET et CORRIGÉ pour templates/matiere_detail.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Détail de : {{ matiere.nom }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <a href="{{ url_for('home') }}" class="back-link">← Retour à la liste</a>
+        <h1>{{ matiere.nom }}</h1>
+        <p><strong>Description :</strong> {{ matiere.description or 'Aucune description' }}</p>
+        <p class="meta-info"><em>Créée le : {{ matiere.date_creation.strftime('%d/%m/%Y à %H:%M') }}</em></p>
+
+        <!-- Le bouton pour accéder à la page de modification -->
+        <div class="form-container" style="margin-top: 2em; margin-bottom: 2em;">
+            <a href="{{ url_for('update_matiere_form', matiere_id=matiere.id) }}" class="button-like">
+                Modifier les informations de cette matière
+            </a>
+        </div>
+
+        <hr>
+
+        <h2>Documents associés</h2>
+        <div class="list-container">
+            {% for doc in matiere.documents %}
+            <div class="list-item document-item">
+                <strong>{{ doc.nom_fichier }}</strong>
+                <span class="meta-info">(Uploadé le: {{ doc.date_upload.strftime('%d/%m/%Y') }})</span>
+                <details>
+                    <summary>Voir le contenu extrait</summary>
+                    <pre>{{ doc.contenu_extrait or 'Aucun contenu n\'a pu être extrait.' }}</pre>
+                </details>
+            </div>
+            {% else %}
+            <p>Aucun document pour cette matière.</p>
+            {% endfor %}
+        </div>
+
+        <div class="form-container">
+            <h3>Uploader un nouveau document PDF</h3>
+            <form action="{{ url_for('upload_document_from_web_form', matiere_id=matiere.id) }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".pdf" required>
+                <button type="submit">Uploader le fichier</button>
+            </form>
+        </div>
+        
+        <hr>
+
+        <div class="form-container-danger">
+            <h3>Supprimer cette matière</h3>
+            <form action="{{ url_for('delete_matiere_web', matiere_id=matiere.id) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette matière et tous ses documents ?');">
+                <button type="submit" class="danger">Supprimer la matière</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

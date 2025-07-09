@@ -1,0 +1,163 @@
+/* Contenu pour static/css/style.css */
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    color: #212529;
+    margin: 0;
+    padding: 2em;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: #ffffff;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+h1, h2, h3 { color: #0056b3; }
+h1 { text-align: center; margin-bottom: 1em; }
+hr { border: 0; height: 1px; background-color: #dee2e6; margin: 2em 0; }
+
+a { color: #007bff; text-decoration: none; }
+a:hover { text-decoration: underline; }
+.back-link { display: inline-block; margin-bottom: 1.5em; }
+
+/* Styles pour les listes */
+.list-container { margin-top: 1em; }
+.list-item {
+    background: #e9ecef;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    border-left: 5px solid #007bff;
+    transition: transform 0.2s ease-in-out;
+}
+.list-item:hover { transform: translateY(-2px); }
+.meta-info { font-size: 0.85em; color: #6c757d; }
+
+/* Styles pour les formulaires */
+.form-container {
+    background: #f1f3f5;
+    padding: 25px;
+    border-radius: 8px;
+    margin-top: 2em;
+}
+label { display: block; margin-bottom: 5px; font-weight: bold; }
+input[type="text"], textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    background: white;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+button:hover { background: #0056b3; }
+
+/* Styles pour les détails (contenu extrait) */
+details { margin-top: 10px; }
+summary { cursor: pointer; font-weight: bold; color: #0056b3; }
+pre {
+    background-color: #2d2d2d;
+    color: #ccc;
+    padding: 1em;
+    border-radius: 4px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+/* AJOUTER CECI À LA FIN DE static/css/style.css */
+.form-container-danger {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 25px;
+    border-radius: 8px;
+    margin-top: 2em;
+}
+
+.form-container-danger h3 {
+    color: #721c24;
+}
+
+button.danger {
+    background-color: #dc3545;
+}
+
+button.danger:hover {
+    background-color: #c82333;
+}
+/* AJOUTER CECI DANS static/css/style.css */
+a.button-like {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: #ffc107; /* Une couleur jaune/orange pour la modification */
+    color: #212529;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+a.button-like:hover {
+    background: #e0a800;
+}
+
+a.button-like {
+    /* Apparence générale */
+    display: inline-block; /* Permet de lui donner une taille */
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none; /* Enlève le soulignement du lien */
+    color: #212529; /* Couleur du texte (noir sobre) */
+    
+    /* Couleur de fond */
+    background-color: #ffc107; /* Jaune/Orange "Warning" classique */
+    
+    /* Bordures et forme */
+    border: 1px solid #e0a800; /* Bordure un peu plus foncée */
+    border-radius: 5px; /* Coins arrondis */
+    
+    /* Effets et transitions */
+    cursor: pointer; /* Montre une main au survol */
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+/* Style au survol de la souris */
+a.button-like:hover {
+    background-color: #e0a800; /* Un jaune plus foncé */
+    color: #000;
+}
+
+/* Petit effet au clic */
+a.button-like:active {
+    transform: translateY(1px); /* S'enfonce légèrement au clic */
+}

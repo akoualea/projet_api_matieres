@@ -1,0 +1,29 @@
+<!-- Contenu pour templates/update_matiere.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier : {{ matiere.nom }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <a href="{{ url_for('matiere_detail', matiere_id=matiere.id) }}" class="back-link">← Annuler et retour au détail</a>
+        <h1>Modifier la matière : {{ matiere.nom }}</h1>
+
+        <div class="form-container">
+            <form action="{{ url_for('update_matiere_submit', matiere_id=matiere.id) }}" method="post">
+                <label for="nom">Nom de la matière :</label>
+                <!-- On pré-remplit le champ avec la valeur actuelle -->
+                <input type="text" id="nom" name="nom" value="{{ matiere.nom }}" required>
+                
+                <label for="description">Description (optionnel) :</label>
+                <!-- On pré-remplit aussi la description -->
+                <textarea id="description" name="description" rows="3">{{ matiere.description or '' }}</textarea>
+                
+                <button type="submit">Enregistrer les modifications</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
