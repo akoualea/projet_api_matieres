@@ -1,33 +1,35 @@
 # ===============================================
-# Fichier render.yaml CORRIGÉ et VÉRIFIÉ
+# Fichier render.yaml - CORRECTION DU TYPE DE SERVICE
 # ===============================================
 
 services:
-  # 1. Notre Base de Données PostgreSQL
-  - type: pserv
+  # 1. Notre service de base de données PostgreSQL
+  - type: psql # CORRECTION ICI : psql au lieu de pserv
     name: bdd-matieres
-    env: postgres
     plan: free
     postgresMajorVersion: 14
-    # Les données de la BDD sont conservées même si le service redémarre
-    volume:
-      name: postgres-data
+    # Les données sont stockées sur un disque persistant
+    disk:
+      name: postgresql-data-disk
       mountPath: /var/lib/postgresql/data
+      sizeGB: 1
 
-  # 2. Notre Application Web FastAPI
+  # 2. Notre application web FastAPI
   - type: web
     name: projet-api-matieres
     env: python
     plan: free
-    # Commande pour construire le projet
+    # Commande pour installer les dépendances
     buildCommand: "pip install -r requirements.txt"
-    # Commande pour démarrer le serveur (utilise notre script)
-    startCommand: "gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.main:app"
+    # Commande pour démarrer le serveur de production Gunicorn
+    startCommand: "gunicorn app.main:app -w 4 -k uvicorn.workers.UvicornWorker"
+    # Définition des variables d'environnement
     envVars:
       - key: PYTHON_VERSION
-        value: "3.11" # Le Python 3.13 n'est pas encore dispo, 3.11 est très sûr.
+        value: "3.11"
       - key: DATABASE_URL
+        # On récupère l'URL de connexion depuis le service de base de données
         fromService:
-          type: pserv
+          type: psql # CORRECTION ICI : psql au lieu de pserv
           name: bdd-matieres
           property: connectionString
